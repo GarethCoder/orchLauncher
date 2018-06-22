@@ -205,7 +205,9 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'libs/ais-client/index', 'ojs/ojinpu
                 //popup.open('#btnGo');
                 self.inputsLoaded(false);
                 $("#formHolderWrapper").remove()
-                let orc = evt.target.innerHTML;
+                let orc = $(this).attr('id')
+                
+                // console.log($(this).attr('id'))
 
                 
 

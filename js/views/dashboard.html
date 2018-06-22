@@ -40,9 +40,9 @@
                 </p>
 
                 <!-- FIX FETCHING THE KEY HERE -->
-                <oj-button style="width:93%;margin-bottom:20px" class="orcButtons">
+                <oj-button style="width:93%;margin-bottom:20px" data-bind="attr: {id: $current.data.name}" class="orcButtons">
                   <span slot='startIcon' class="demo-filter-icon-16 demo-icon-font"></span>
-                  <oj-bind-text value="{{$current.data.name}}"></oj-bind-text>
+                  <oj-bind-text value="{{$current.data.name.substring(0,25)}}"></oj-bind-text>
                 </oj-button>
                 
                 
