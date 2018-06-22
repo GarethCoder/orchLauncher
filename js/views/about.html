@@ -1,0 +1,34 @@
+<!--
+ Copyright (c) 2014, 2018, Oracle and/or its affiliates.
+ The Universal Permissive License (UPL), Version 1.0
+ --><br><br><br><br><br><br><br><br><br>
+<div class="oj-hybrid-padding">
+  <h1>About Content Area</h1>
+  <div>
+      To change the content of this section, you will make edits to the about.html file located in the /js/views folder.
+  </div>
+</div>
+<div id="dialogWrapper">
+  <div style="display:none" id="scrollingDialog" title="Scrolling Dialog" 
+       data-bind="ojComponent:{component: 'ojDialog', initialVisibility: 'hide',  modality: 'modeless',
+		  rootAttributes: { style: 'width: 250px; height: 180px;'}
+		  }">
+     <div class="oj-dialog-body">
+       <h3> Dialog with scrolling Content </h3>
+       <ol>
+         <li> Item A </li>
+         <li> Item B </li>
+         <li> Item C </li>
+         <li> Item D </li>
+         <li> Item E </li>
+         <li> Item F </li>
+         <li> Item G </li>
+         <li> Item H </li>
+       </ol>
+     </div>
+     <div class="oj-dialog-footer">
+        <button id="okButton" data-bind="ojComponent: {component: 'ojButton', label: 'OK'}"> </button>
+      </div>
+  </div>
+  <button id="buttonOpener" data-bind="ojComponent: {component: 'ojButton', label: 'Open Scrolling Dialog'}"></button>
+</div>

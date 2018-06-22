@@ -1,0 +1,76 @@
+qrb-scanners:not(.oj-complete) {
+    visibility: hidden;
+}
+
+qrb-scanners {
+    width: 100%;
+    height: 100%;
+}
+
+qrb-scanners .footer {
+    position: fixed;
+    left: 0;
+    bottom: 200;
+    width: 100%;
+    background-color: red;
+    color: white;
+    text-align: center;
+}
+
+.button-select {
+    width: 100%;
+    background-color: #dddddd;
+    border-color:  #dddddd;
+    color: black;
+    width: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hidden {
+    display: none;
+}
+
+#item-text {
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    font-size: 23px;
+    letter-spacing: 2px;
+    word-spacing: -2.6px;
+    color: #000000;
+    font-weight: 400;
+    text-decoration: underline solid rgb(68, 68, 68);
+    font-style: normal;
+    font-variant: small-caps;
+    text-transform: none;
+    text-align: center;
+}
+
+
+/*Generic*/
+
+.wrapper {
+    margin: 60px auto;
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 1.25em;
+}
+
+
+/*Specific styling*/
+
+#content {
+    padding: 15px;
+    border: solid 1px #eee;
+    max-width: 660px;
+    margin: auto;
+    border-radius: 4px;
+}
+
+video {
+    width: 100%;
+    height: 50%;
+    /* margin-left: 250px; */
+}

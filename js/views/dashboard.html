@@ -1,0 +1,236 @@
+    <div class="oj-panel-alt1">
+      <p data-bind="visible: unloaded">
+        <oj-bind-text value="This Orchestration tester allows testing of configured orchestrations at the AIS server currently logged in."></oj-bind-text>
+      </p>
+      <p data-bind="visible: unloaded">
+        <oj-bind-text value="NOTE - Orchestrator Discovery service must be active."></oj-bind-text>
+      </p>
+      <br>
+      <div class="icon" style="opacity: 0.5;">
+        <img src="user_icon_copy.png">
+      </div>
+      <oj-input-text class="search" id="filterTextInput" style="max-width:100%; margin: -17px 15px -2px -4px;" value="{{filterValue}}" placeholder="filter..."></oj-input-text>
+      <br>
+		<h2 style="font-size:14px; color:#000; padding: 0px 0px 5px 5px; margin-left: 21px; margin-top:-5px;">
+    		<oj-bind-text value="[[userMessage]]"></oj-bind-text>
+ 		 </h2>
+      <oj-bind-for-each data="[[orcs]]">
+        <template>
+          <div class="oj-panel oj-panel-shadow-md">
+            <div class="oj-flex">
+              <div class="oj-flex-item">
+                <h4 style="font-size:18px; padding: 15px 0 15px 15px;">
+                  <oj-bind-text value="{{$current.data.name}}"></oj-bind-text>
+                </h4>
+
+
+                <p style="font-size:14px; padding: 0px 0 5px 15px;">
+                  Input Format:
+                  <em>
+                    <oj-bind-text value="{{$current.data.inputFormat}}"></oj-bind-text>
+                  </em>
+                  <br> UDO Group:
+                  <em>
+                    <oj-bind-text value="{{$current.data.udoGroup}}"></oj-bind-text>
+                  </em>
+                  <br> Version:
+                  <em>
+                    <oj-bind-text value="{{$current.data.version}}"></oj-bind-text>
+                  </em>
+                </p>
+
+                <!-- FIX FETCHING THE KEY HERE -->
+                <oj-button style="width:93%;margin-bottom:20px" class="orcButtons">
+                  <span slot='startIcon' class="demo-filter-icon-16 demo-icon-font"></span>
+                  <oj-bind-text value="{{$current.data.name}}"></oj-bind-text>
+                </oj-button>
+                
+                
+               <div id="dialogWrapper">
+            <oj-dialog style="display:none; min-width: 75vw;top: 25px; left: 10px; bottom: auto; right: auto;" id="modelessDialog1" title="Modeless Dialog" modality="modal">
+                <div slot="header">
+                <h5 style="padding: 15px; font-weight:bold;">
+         			<oj-bind-text value="{{userMessage}}"></oj-bind-text>
+       			 </h5>
+
+                </div>
+                <div slot="body">
+                    
+                    <h4 style="font-size: 18px; padding: 15px 10px 0px 15px; font-weight: lighter; text-align: center;">Orchestration Inputs</h4>
+            <div class="oj-flex-items-pad">
+              <div class="oj-flex oj-sm-flex-direction-column">
+                <oj-bind-for-each data="[[inputitems]]">
+                  <template>
+                    <div class="oj-flex-item label">
+                      <label class="oj-label-nocomp" style="font-size:9px" for="{{$current.data.name}}">
+                        <oj-bind-text value="{{$current.data.type}}"></oj-bind-text>
+                      </label>
+                    </div>
+                    <div class="oj-flex-item" style="width:100%!important">
+
+                      <input type="text" style="max-width:100%" data-bind="attr: { id: $current.data.name, placeholder: $current.data.label }"
+                        class="oj-form-control oj-inputtext-nocomp orcFormInputs format"></input>
+
+                    </div>
+
+                  </template>
+
+
+                </oj-bind-for-each>
+                <br>
+                <div class="oj-flex-item">
+                  <oj-button id="{{selectedOrc}}" class="submitOrc" style="width:57%;">
+                    <span slot='startIcon' class="demo-fire-icon-24 demo-icon-font-24"></span>
+                    Launch</oj-button>
+
+                </div>
+                <div class="oj-flex-item">
+                  <oj-button class="resetOrc" style="width:32%; position: relative; margin-top: -64px; float: right; padding-right: 15px;" data-bind="click: handleOKClose">
+                    <span slot='startIcon' class="demo-signout-icon-24 demo-icon-font-24"></span>
+                    Cancel</oj-button>
+                </div>
+                
+
+              </div>
+            </div>
+            <div class="oj-flex" style="padding:20px 15px 0px 15px;">
+
+          <oj-bind-if test="{{revealInputs}}">
+
+            <div style="height:350px!important;width:50%">
+              <p style="font-size:18px; color:#000; margin-bottom: 0px;">Post to E1</p>
+              <br>
+              <textarea style="width:95%;height:80%" data-bind="value:orcJSON"></textarea>
+            </div>
+          </oj-bind-if>
+          <oj-bind-if test="{{orcReplied}}">
+
+            <div id="replyHolder" style="height:350px!important;width:100%">
+              <p style="font-size:18px; color:#000; margin-bottom: 0px;">Reply from E1</p>
+              <br>
+              <textarea style="width:95%;height:80%" data-bind="value:orcResponse"></textarea>
+            </div>
+          </oj-bind-if>
+          <oj-bind-if test="{{waiting}}">
+            <div style="height:45px!important;width:100%">
+              <h4 style="font-size:18px; color:#000; text-align: center;">Waiting for E1 Reply...</h4>
+            </div>
+                    
+                </div>
+                <!--<div slot="footer">
+                    <oj-button id="okButton" data-bind="click: handleOKClose">OK</oj-button>
+                </div>-->
+                
+                <oj-button data-bind="visible:orcSubmitted" class="revealInputs" style="width:90%; padding:0px 0px 21px 21px;">
+          <span slot='startIcon' class="demo-catalog-icon-24 demo-icon-font-24"></span>
+          Show Inputs</oj-button>
+                
+            </oj-dialog>
+           
+        </div>
+                
+               </div>
+
+
+
+            </div>
+
+          </div>
+        </template>
+
+      </oj-bind-for-each>
+    </div>
+  </div>
+</div>
+
+<!--<div id="popupWrapper">
+  <oj-popup class="demo-popup" id="popup1" tail="none" position.my.horizontal="center" position.my.vertical="top" position.at.horizontal="center"
+    position.at.vertical="top" position.of="window" position.offset.y="0" modality="modal" style="min-width: 100vw;min-height:1000vh;background-color:rgb(0, 0, 0, 0.5)">-->
+    <!--<div class="demo-popup-body">
+      
+      <div class="demo-popup-content">
+        <oj-bind-if test="[[inputsLoaded]]">
+          <div class="oj-panel oj-panel-shadow-md" id="inputHolder" style="margin: 25px; border-radius: 21px;">
+          <div class="demo-popup-header">
+        		<h5 style="padding: 15px; font-weight:bold;">
+         			<oj-bind-text value="{{userMessage}}"></oj-bind-text>
+       			 </h5>
+                 <hr>
+     	  </div>
+            <h4 style="font-size: 18px; padding: 15px 10px 0px 15px; font-weight: lighter; text-align: center;">Orchestration Inputs</h4>
+            <div class="oj-flex-items-pad">
+              <div class="oj-flex oj-sm-flex-direction-column">
+                <oj-bind-for-each data="[[inputitems]]">
+                  <template>
+                    <div class="oj-flex-item label">
+                      <label class="oj-label-nocomp" style="font-size:9px" for="{{$current.data.name}}">
+                        <oj-bind-text value="{{$current.data.type}}"></oj-bind-text>
+                      </label>
+                    </div>
+                    <div class="oj-flex-item" style="width:100%!important">
+
+                      <input type="text" style="max-width:100%" data-bind="attr: { id: $current.data.name, placeholder: $current.data.label }"
+                        class="oj-form-control oj-inputtext-nocomp orcFormInputs format"></input>
+
+                    </div>
+
+                  </template>
+
+
+                </oj-bind-for-each>
+                <br>
+                <div class="oj-flex-item">
+                  <oj-button id="{{selectedOrc}}" class="submitOrc" style="width:57%;">
+                    <span slot='startIcon' class="demo-fire-icon-24 demo-icon-font-24"></span>
+                    Launch</oj-button>
+
+                </div>
+                <div class="oj-flex-item">
+                  <oj-button class="resetOrc" style="width:32%; position: relative; margin-top: -64px; float: right; padding-right: 15px;">
+                    <span slot='startIcon' class="demo-signout-icon-24 demo-icon-font-24"></span>
+                    Cancel</oj-button>
+                </div>
+                
+
+              </div>
+            </div>
+            <div class="oj-flex" style="padding:20px 15px 0px 15px;">
+
+          <oj-bind-if test="{{revealInputs}}">
+
+            <div style="height:350px!important;width:50%">
+              <p style="font-size:18px; color:#000; margin-bottom: 0px;">Post to E1</p>
+              <br>
+              <textarea style="width:95%;height:80%" data-bind="value:orcJSON"></textarea>
+            </div>
+          </oj-bind-if>
+          <oj-bind-if test="{{orcReplied}}">
+
+            <div id="replyHolder" style="height:350px!important;width:100%">
+              <p style="font-size:18px; color:#000; margin-bottom: 0px;">Reply from E1</p>
+              <br>
+              <textarea style="width:95%;height:80%" data-bind="value:orcResponse"></textarea>
+            </div>
+          </oj-bind-if>
+          <oj-bind-if test="{{waiting}}">
+            <div style="height:45px!important;width:100%">
+              <h4 style="font-size:18px; color:#000; text-align: center;">Waiting for E1 Reply...</h4>
+            </div>
+          </oj-bind-if>
+        </div>
+
+        <oj-button data-bind="visible:orcSubmitted" class="revealInputs" style="width:90%; padding:0px 0px 21px 21px;">
+          <span slot='startIcon' class="demo-catalog-icon-24 demo-icon-font-24"></span>
+          Show Inputs</oj-button>
+
+      </div>
+          </div>
+        </oj-bind-if>
+
+
+        
+      
+    </div>
+  </oj-popup>
+
+</div>-->
